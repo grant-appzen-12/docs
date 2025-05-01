@@ -1,16 +1,8 @@
 # Getting Started
 
-## Overview
-
-AppZen Autonomous AP delivers autonomous processing for all invoices sent to your organization, increasing the speed and accuracy of processing while lowering costs.
-
-## Introduction
-
-Autonomous AP automates the processing of non-digital invoices (PDF and standard images) and posts processed information back to the customer's ERP systems. It is an AI-first application that understands invoice content, context, and meaning, enforces company spend policies, performs 3-way PO matching, predicts GL and cost centers, audits and verifies vendor information, prepares each invoice for workflow approval, and posts processed invoices in the ERP system.
+AppZen Autonomous AP automates the processing of invoices (PDF and standard images) and posts processed information back to your ERP systems. It understands invoice content, enforces spend policies, performs 3-way PO matching, predicts GL and cost centers, and prepares invoices for workflow approval.
 
 ## Getting Started Steps
-
-To get started with Autonomous AP:
 
 1. Request API credentials from your AppZen account manager
 2. Configure your master data synchronization (vendors, chart of accounts, etc.)
@@ -56,5 +48,3 @@ After you've set up your initial configuration:
 1. Review the [API Reference](autonomous-ap-reference.md) documentation
 2. Explore the [Master Data APIs](autonomous-ap-master-data.md) for synchronizing your vendor and accounting data
 3. Learn how to use the [Transaction Data APIs](autonomous-ap-transaction-data.md) for invoice processing
-
-For further assistance, contact support@appzen.com.

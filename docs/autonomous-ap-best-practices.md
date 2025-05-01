@@ -1,9 +1,5 @@
 # Integration Best Practices
 
-## Overview
-
-When integrating with the Autonomous AP APIs, follow these best practices to ensure a smooth, efficient, and secure implementation.
-
 ## Authentication Security
 
 1. **Secure Credential Storage**: Store your API credentials securely and never expose them in client-side code.
@@ -85,7 +81,3 @@ Consider implementing a token-based caching strategy to avoid making redundant A
 2. **Provide Complete Metadata**: Include as much metadata as possible when submitting invoices.
 3. **Monitor Processing Status**: Regularly check the status of submitted invoices.
 4. **Handle Exceptions Gracefully**: Implement processes to handle exceptions in invoice processing.
-
-## Support and Maintenance
-
-For API support or questions about these best practices, contact support@appzen.com. Regular reviews and updates to your integration will ensure continued smooth operation as your business needs evolve and as the AppZen platform is enhanced.

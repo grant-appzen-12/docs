@@ -1,55 +1,38 @@
 # API Reference
 
-## Overview
-
-This page provides an understanding of how the Autonomous AP APIs behave. AppZen APIs are organized around REST as follows:
-* The API accepts form-encoded request bodies
-* It returns JSON-encoded responses
-* It uses standard HTTP response codes and verbs
+AppZen Autonomous AP APIs are organized around REST principles:
+* Form-encoded request bodies
+* JSON-encoded responses
+* Standard HTTP response codes and verbs
 
 ## Request and Response Structure
 
 ### Request Structure
 
-Below is the Request Structure for AppZen Autonomous AP:
+**Base URL**: `https://api.appzen.com/ap`
 
-**Request URI**:
-The requests to AppZen APIs must be sent to the base URL:
-```
-https://api.appzen.com/ap
-```
-
-For a particular call, append the base URL with the name of the resource. Some endpoints may contain Path Parameters.
+For a particular call, append the base URL with the resource name. Some endpoints contain Path Parameters.
 
 Example:
 ```
 https://api.appzen.com/ap/v1/invoices
 ```
 
-**Request Method**:
-AppZen APIs use the standard HTTP Verbs/Methods. Select the suitable method: GET, POST, PUT, or DELETE based on the action to be performed.
+**Method**: Use appropriate HTTP method (GET, POST, PUT, DELETE) based on the action.
 
-**Request Headers**:
-AppZen APIs use headers for authentication. The Autonomous AP APIs use API key-based authentication.
+**Headers**: All APIs require authentication headers. See [Authentication](/__authentication-__.md) for details.
 
-**Request Body**:
-The request body supports JSON payloads.
+**Body**: JSON payloads for request body when applicable.
 
 ### Response Structure
 
-Below is the Response Structure for Autonomous AP:
+**Headers**: Standard HTTP response headers are returned.
 
-**Response Headers**:
-The Standard HTTP response headers are returned.
+**Body**: JSON format responses with success or failure information.
 
-**Response Body**:
-The response body is in JSON format returning the success or failure information.
-
-**Pagination**:
-For endpoints that return multiple results, pagination is supported per the JSON API specification.
+**Pagination**: Available for endpoints returning multiple results, following JSON API specification.
 
 **Response Codes**:
-The endpoints in the AppZen APIs return standard HTTP status codes for successful or unsuccessful operations. The following table describes the common response codes:
 
 | Response Code | Description |
 | --- | --- |
@@ -58,18 +41,14 @@ The endpoints in the AppZen APIs return standard HTTP status codes for successfu
 
 ## Authentication
 
-Autonomous AP APIs use API key-based authentication. For detailed authentication instructions, see the [Authentication](/__authentication-__.md) section.
-
 {% hint style="info" %}
-Authentication for Autonomous AP APIs is done based on the following fields provided by the AppZen Support team:
-1. **customer_id**: You will be provided with a unique value for this field.
-2. **x-api-key**: You will be provided with a unique value for this field.
-3. **customer-key**: You will be provided with a unique value for this field.
+Authentication requires these fields from the AppZen Support team:
+1. **customer_id**: Your unique customer identifier
+2. **x-api-key**: Your API key
+3. **customer-key**: Your customer-specific key
 {% endhint %}
 
 ## API Categories
-
-Based on their functionality, the Autonomous AP APIs are categorized as follows:
 
 ### Master Data APIs
 
@@ -95,13 +74,11 @@ Based on their functionality, the Autonomous AP APIs are categorized as follows:
 
 ## Rate Limits
 
-The Autonomous AP APIs have a rate limit of 20 requests per second for each data type. If you exceed this limit, you will receive a 429 Too Many Requests response.
+The Autonomous AP APIs have a rate limit of 20 requests per second for each data type.
 
 ## Error Handling
 
-The API uses standard HTTP status codes to indicate the success or failure of an API call. In addition to the HTTP status code, the response body will contain a JSON object with additional information.
-
-**Example Error Response:**
+Responses include HTTP status codes and a JSON body with additional error details:
 
 ```json
 {
@@ -114,8 +91,4 @@ The API uses standard HTTP status codes to indicate the success or failure of an
 
 ## Versioning
 
-The API version is specified in the URL path. For example, `/v1/invoices` indicates version 1 of the Invoices API. When major changes are made to the API, a new version will be released and the old version will continue to be supported for a period of time.
-
-## Support
-
-For API support, contact support@appzen.com or refer to the [Getting Started](autonomous-ap-getting-started.md) guide for more information.
+API version is specified in the URL path (e.g., `/v1/invoices`). New versions are released for major changes, with prior versions supported for a transition period.

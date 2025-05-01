@@ -1,12 +1,8 @@
 # Transaction Data APIs
 
-## Overview
-
 The Transaction Data APIs allow you to submit invoices for processing, check the status of invoice processing, retrieve extracted invoice data, and get audit results.
 
 ## Generate Upload URL API
-
-Before submitting invoice documents, you need to generate a secure upload URL.
 
 **Request URI**
 ```
@@ -45,8 +41,6 @@ curl -X GET "https://api.appzen.com/dictionary-data-services/generate-upload-url
 ```
 
 ## Invoice Submission API
-
-### Overview
 
 The Invoice Submission API allows you to submit an invoice document for processing.
 
@@ -109,8 +103,6 @@ curl -X PUT "https://api.appzen.com/ap/v1/invoices" \
 
 ## Invoice Status API
 
-### Get Processing Status
-
 **Request URI**
 ```
 GET https://api.appzen.com/ap/v1/invoices/{invoice_id}/status
@@ -152,8 +144,6 @@ curl -X GET "https://api.appzen.com/ap/v1/invoices/azp_inv_1234567890/status" \
 ```
 
 ## Invoice Data API
-
-### Get Invoice Data
 
 **Request URI**
 ```
@@ -263,8 +253,6 @@ curl -X GET "https://api.appzen.com/ap/v1/invoices/azp_inv_1234567890" \
 
 ## Invoice Audit Results API
 
-The Invoice Audit Results API allows you to retrieve audit analysis results for processed invoices.
-
 **Request URI**
 ```
 GET https://api.appzen.com/dictionary-data-services/invoice/audit-results
@@ -331,8 +319,6 @@ curl -X GET "https://api.appzen.com/dictionary-data-services/invoice/audit-resul
 | 500 | Server error |
 
 ## Invoice Update API
-
-### Update Invoice Data
 
 **Request URI**
 ```

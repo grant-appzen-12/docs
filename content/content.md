@@ -1,10 +1,6 @@
 # API Documentation
 
-## Overview
-
-AppZen provides comprehensive APIs that enable you to streamline your financial operations by integrating our services with your existing systems. Our APIs allow you to automate tasks such as expense management, invoice processing, and compliance checks.
-
-Our Public APIs are compatible with popular accounting and ERP systems like Coupa, SAP, Oracle, and NetSuite, ensuring seamless integration without compatibility issues.
+AppZen APIs enable you to streamline financial operations by integrating our services with your existing systems. Our APIs are compatible with popular accounting and ERP systems like Coupa, SAP, Oracle, and NetSuite.
 
 This documentation is organized into the following sections:
 
@@ -28,7 +24,3 @@ To get started with AppZen APIs:
 4. Check out the product-specific API documentation for:
    - [Expense Audit](../docs/expense-audit.md)
    - [Autonomous AP](../docs/autonomous-ap.md)
-
-## Need Help?
-
-For assistance with API integration, contact support@appzen.com. Our team is available to provide guidance and resolve any issues with your integration.
