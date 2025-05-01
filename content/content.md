@@ -125,60 +125,66 @@ In case of expiration:
 1. You need to refresh the token to regain access.
 2. The scope gained will be the same as the original grant
 
-#### Request URI
+### Request URI
 
 POST https://api.appzen.com/api/v3/oauth2/token
 
-#### Body Parameters
+### Body Parameters
 
-| Name           | Type   | Description                    | Required |
-| -------------- | ------ | ------------------------------ | -------- |
-| client\_id     | String | The unique client Id assigned. | Yes      |
-| client\_secret | String | The unique password assigned.  | Yes      |
-| scope          | String | The scope assigned.            | Yes      |
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| client_id | String | The unique client Id assigned. | Yes |
+| client_secret | String | The unique password assigned. | Yes |
+| scope | String | The scope assigned.<br>The scope can be:<br>* expense.report.read<br>* expense.report.write | Yes |
 
-#### Sample Request
+### Sample Request
 
-curl -L -X POST 'https://api.appzen.com/enft/api/v3/oauth2/token' \\\
--H 'Content-Type: application/x-www-form-urlencoded' \\\
-\--data-urlencode 'client\_id=0oa6xxxx' \\\
-\--data-urlencode 'client\_secret=wfiWxxxx' \\\
-\--data-urlencode 'scope=expense.report.read expense.report.write'
+```bash
+curl -L -X POST 'https://api.appzen.com/enft/api/v3/oauth2/token' \
+-H 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'client_id=0oa6xxxx' \
+--data-urlencode 'client_secret=wfiWxxxx' \
+--data-urlencode 'scope=expense.report.read expense.report.write'
+```
 
-#### Sample Response
+### Sample Response
 
-**Success**
+#### Success
 
-{\
-"token\_type": "Bearer",\
-"expires\_in": 3600,\
-"access\_token": "eyJrxxxx",\
-"scope": "expense.report.read expense.report.write"\
+```json
+{
+    "token_type": "Bearer",
+    "expires_in": 3600,
+    "access_token": "eyJrxxxx",
+    "scope": "expense.report.read expense.report.write"
 }
+```
 
-**Failure**
+#### Failure
 
 The request fails if you do not provide the scope.
 
-{\
-"msg": "Internal Server Error: 400 Bad Request: "{"error":"invalid\_scope","error\_description":"The authorization server resource does not have any configured default scopes, 'scope' must be provided."}"",\
-"httpStatus": "INTERNAL\_SERVER\_ERROR",\
-"statusCode": 500\
+```json
+{
+    "msg": "Internal Server Error: 400 Bad Request: \"{\"error\":\"invalid_scope\",\"error_description\":\"The authorization server resource does not have any configured default scopes, 'scope' must be provided.\"}\"",
+    "httpStatus": "INTERNAL_SERVER_ERROR",
+    "statusCode": 500
 }
+```
 
 ## Status Code
 
-| HTTP               | Status            | Code Summary                                                                                                              |
-| ------------------ | ----------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| 200                | OK                | The request is successful                                                                                                 |
-| 201                | OK                | The request is successful                                                                                                 |
-| 400                | Bad Request       | The request failed due to a malformed request syntax. Check the requested URL, including the parameters.                  |
-| 401                | Unauthorized      | The request failed due to an authorization issue. For example, the Customer Key could be missing or invalid.              |
-| 402                | Request Failed    | The parameters were valid but the request failed.                                                                         |
-| 403                | Forbidden         | The API key doesn’t have permissions to perform the request.                                                              |
-| 404                | Not Found         | The requested resource doesn’t exist. Check the requested URL.                                                            |
-| 429                | Too Many Requests | Too many requests hit the API too quickly/ limit has been consumed. We recommend an exponential backoff of your requests. |
-| 500, 502, 503, 504 | Server Errors     | Something went wrong on AppZen’s end. (These are rare.)                                                                   |
+| HTTP | Status | Code Summary |
+| --- | --- | --- |
+| 200 | OK | The request is successful |
+| 201 | OK | The request is successful |
+| 400 | Bad Request | The request failed due to a malformed request syntax. Check the requested URL, including the parameters. |
+| 401 | Unauthorized | The request failed due to an authorization issue. For example, the Customer Key could be missing or invalid. |
+| 402 | Request Failed | The parameters were valid but the request failed. |
+| 403 | Forbidden | The API key doesn’t have permissions to perform the request. |
+| 404 | Not Found | The requested resource doesn’t exist. Check the requested URL. |
+| 429 | Too Many Requests | Too many requests hit the API too quickly/ limit has been consumed. We recommend an exponential backoff of your requests. |
+| 500, 502, 503, 504 | Server Errors | Something went wrong on AppZen’s end. (These are rare.) |
 
 ## SSO
 
@@ -238,15 +244,15 @@ D. If issues persist, contact support@appzen.com.
 
 ### Sample Assertion Data
 
-| Attribute Name   | Attribute Value      |
-| ---------------- | -------------------- |
-| firstName        | John                 |
-| lastName         | Doe                  |
-| email            | john.doe@company.com |
-| permissionGroup  | Auditor              |
-| permissionGroup  | Functional Admin     |
-| permissionOrg    | 102345 (org ID)      |
-| permissionOrg    | 13245 (org ID)       |
+| Attribute Name | Attribute Value |
+| --- | --- |
+| firstName | John |
+| lastName | Doe |
+| email | john.doe@company.com |
+| permissionGroup | Auditor |
+| permissionGroup | Functional Admin |
+| permissionOrg | 102345 (org ID) |
+| permissionOrg | 13245 (org ID) |
 | permissionEntity | 32455556 (entity ID) |
 | permissionEntity | 32455231 (entity ID) |
 
