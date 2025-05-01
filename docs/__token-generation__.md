@@ -1,101 +1,59 @@
-# __Token Generation__
+# Token Generation
 
-To generate an access token to AppZen's API gateway for authentication and validation you need to use this token to access AppZen resources. The token is valid for 60 minutes and AppZen allows the regeneration of the token.
+{% hint style="info" %}
+To access AppZen resources, you must generate an access token for authentication and validation. The token is valid for 60 minutes, after which it must be refreshed.
+{% endhint %}
 
-In case of expiration:
+{% hint style="warning" %}
+**Token Expiration:** The token is valid for 60 minutes only. After expiration, you will need to refresh the token to regain access. The refreshed token will have the same scope as the original grant.
+{% endhint %}
 
-1. You need to refresh the token to regain access.
-2. The scope gained will be the same as the original grant
+### Request URI
 
-## Request URI 
+```bash
+POST https://api.appzen.com/api/v3/oauth2/token
+```
 
-POST  https://api.appzen.com/api/v3/oauth2/token
+### Body Parameters
 
-## Body Parameters
+{% hint style="info" %}
+The following parameters are required when generating an access token:
+{% endhint %}
 
-__Name__
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| client_id | String | The unique client Id assigned. | Yes |
+| client_secret | String | The unique password assigned. | Yes |
+| scope | String | The scope assigned.<br>The scope can be:<br>* expense.report.read<br>* expense.report.write | Yes |
 
-__Type__
+### Sample Request
 
-__Description__
+```bash
+curl -L -X POST 'https://api.appzen.com/api/v3/oauth2/token' \
+-H 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'client_id=0oa6xxxx' \
+--data-urlencode 'client_secret=wfiWxxxx' \
+--data-urlencode 'scope=expense.report.read expense.report.write'
+```
 
-__Required__
+### Sample Response
 
-client\_id
+#### Success
 
-String
-
-The unique client Id assigned.
-
-Yes
-
-client\_secret
-
-String
-
-The unique password assigned.
-
-Yes
-
-scope
-
-String
-
-The scope assigned. 
-
-The scope can be:
-
-expense.report.read expense.report.write
-
-Yes
-
-## Sample Request
-
-
-
-curl \-L \-X POST 'https://api.appzen.com/enft/api/v3/oauth2/token' \\
-
-\-H 'Content\-Type: application/x\-www\-form\-urlencoded' \\
-
-\-\-data\-urlencode 'client\_id=0oa6xxxx' \\
-
-\-\-data\-urlencode 'client\_secret=wfiWxxxx' \\
-
-\-\-data\-urlencode 'scope=expense.report.read expense.report.write'
-
-## Sample Response
-
-Success
-
-
-
-\{
-
-    "token\_type": "Bearer",
-
-    "expires\_in": 3600,
-
-    "access\_token": "eyJrxxxx",
-
+```json
+{
+    "token_type": "Bearer",
+    "expires_in": 3600,
+    "access_token": "eyJrxxxx",
     "scope": "expense.report.read expense.report.write"
+}
+```
 
-\}
+#### Failure
 
-Failure
-
-The request fails if you do not provide the scope.
-
-
-
-\{
-
-    "msg": "Internal Server Error: 400 Bad Request: \\"\{\\"error\\":\\"invalid\_scope\\",\\"error\_description\\":\\"The authorization server resource does not have any configured default scopes, 'scope' must be provided.\\"\}\\"",
-
-    "httpStatus": "INTERNAL\_SERVER\_ERROR",
-
+```json
+{
+    "msg": "Internal Server Error: 400 Bad Request: \"{\"error\":\"invalid_scope\",\"error_description\":\"The authorization server resource does not have any configured default scopes, 'scope' must be provided.\"}\"",
+    "httpStatus": "INTERNAL_SERVER_ERROR",
     "statusCode": 500
-
-\}
-
-
-
+}
