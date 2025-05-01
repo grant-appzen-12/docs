@@ -169,8 +169,6 @@ Yes
 
 ## <a id="_vpuev6ftihh"></a>Sample Request
 
-
-
 curl \-L \-X POST 'https://api\.appzen\.com/enft/api/v3/oauth2/token' \\
 
 \-H 'Content\-Type: application/x\-www\-form\-urlencoded' \\
@@ -181,41 +179,26 @@ curl \-L \-X POST 'https://api\.appzen\.com/enft/api/v3/oauth2/token' \\
 
 \-\-data\-urlencode 'scope=expense\.report\.read expense\.report\.write'
 
-## <a id="_1axljnm3r7jg"></a>Sample Response
+## <a id="_1axljnm3r7jg"></a>Sample Response
 
-Success
-
-
+### Success
 
 \{
-
     "token\_type": "Bearer",
-
     "expires\_in": 3600,
-
     "access\_token": "eyJrxxxx",
-
     "scope": "expense\.report\.read expense\.report\.write"
-
 \}
 
-Failure
+### Failure
 
 The request fails if you do not provide the scope\.
 
-
-
 \{
-
     "msg": "Internal Server Error: 400 Bad Request: \\"\{\\"error\\":\\"invalid\_scope\\",\\"error\_description\\":\\"The authorization server resource does not have any configured default scopes, 'scope' must be provided\.\\"\}\\"",
-
     "httpStatus": "INTERNAL\_SERVER\_ERROR",
-
     "statusCode": 500
-
 \}
-
-
 
 # <a id="_f185w3t5fzpv"></a>__Status Code__
 
@@ -443,4 +426,3 @@ For performing Employee Hierarchy Sync alongside uploading all the details of Em
 ## <a id="_1pxxzvjqilwy"></a>Manage Failed Records
 
 The list of failed records that could not be ingested in the AppZen system can be downloaded from the Integration Job Status screen\. This file is under the Failed Item Count column and is also in the ‘\.csv’ format\. Along with all the record data, it contains the reason for the failure of the record\. The new file in the SFTP server post resolving the errors can be uploaded\. Those records are fetched into AppZen the next time the scheduled job runs\.
-
