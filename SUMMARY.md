@@ -7,3 +7,5 @@
 * [Status Code](docs/__status-code__.md)
 * [SSO](docs/__sso__.md)
 * [CSV](docs/csv.md)
+* [Expense Audit](docs/expense-audit.md)
+* [Autonomous AP](docs/autonomous-ap.md)
