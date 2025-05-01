@@ -44,7 +44,7 @@ The Self-service credential generation now supports OAuth 2.0 for AppZen product
 
 You need to generate an access token to AppZen's API gateway for authentication and validation. For this, refer to Token Generation
 
-You need to send subsequent requests with the Authorization HTTP header value as Bearer .
+You need to send subsequent requests with the Authorization HTTP header value as Bearer `<oauth2-access-token>`.
 
 API credentials are unique to each customer and must be configured before making API calls. AppZen's external APIs support API key-based authentication (OAuth1.0). For additional security, AppZen also supports OAuth 2.0.
 
@@ -131,11 +131,11 @@ POST https://api.appzen.com/api/v3/oauth2/token
 
 ### Body Parameters
 
-| Name | Type | Description | Required |
-| --- | --- | --- | --- |
-| client_id | String | The unique client Id assigned. | Yes |
-| client_secret | String | The unique password assigned. | Yes |
-| scope | String | The scope assigned.<br>The scope can be:<br>* expense.report.read<br>* expense.report.write | Yes |
+| Name          | Type   | Description                                                                                       | Required |
+|---------------|--------|---------------------------------------------------------------------------------------------------|----------|
+| client_id     | String | The unique client Id assigned.                                                                    | Yes      |
+| client_secret | String | The unique password assigned.                                                                     | Yes      |
+| scope         | String | The scope assigned.<br>The scope can be:<br>* expense.report.read<br>* expense.report.write          | Yes      |
 
 ### Sample Request
 
