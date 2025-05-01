@@ -8,6 +8,8 @@ Our API documentation is an excellent resource if you're looking for an easy way
 
 This section explains the authentication available in both EA and AAP.
 
+![Image: Authentication Overview - Diagram showing the different authentication methods available](/images/authentication_overview.png)
+
 #### Authentication in EA
 
 AppZen’s external APIs support API key-based authentication (OAuth1.0). To provide additional security, AppZen supports OAuth 2.0.
@@ -31,6 +33,8 @@ For Expense Audit external APIs, the authentication type we used until now was A
 * Ingestion API
 * Expense Audit Results API
 * Audit Action API
+
+![Image: OAuth 2.0 Supported APIs - Diagram showing the APIs that support OAuth 2.0 authentication](/images/oauth2_supported_apis.png)
 
 OAuth 2.0 is the industry standard authentication process. We are upgrading to OAuth 2.0 as it adds an additional layer of security, it is time limited, and the OAuth2.0 token includes specific API in scope instead of all.
 
@@ -70,6 +74,8 @@ AppZen's API is built around REST. In OAuth 2.0, the following three parties are
 
 Now, let us configure the steps to enable self-serve UI in the AppZen system. Navigate to the left menu and select Integration > API Credentials.
 
+![Image: Navigation to API Credentials - Shows the left menu with Integration expanded and API Credentials highlighted](/images/navigate_to_api_credentials.png)
+
 In this section, understand how to configure OAuth 2.0 through a self-service portal. The feature is currently only supported for Expense Audits, and future releases will also include Autonomous AP.
 
 NOTE: OAuth 2.0 is for new customers who opt for API-based integration.
@@ -80,11 +86,11 @@ Since OAuth 2.0 is an industry-standard protocol for authentication, AppZen ensu
 
 As the API Credentials page opens, it displays a list of all the existing credentials set.
 
-Image: API Credentials page view.
+![Image: API Credentials page view - Shows the list of existing API credentials with their details](/images/api_credentials_page.png)
 
 Select + Add New Credentials. The Add New Credentials page opens. Here, the admin needs to fill out the required details. Follow the steps mentioned below.
 
-Image: The Add New Credential page opens.
+![Image: The Add New Credential page - Shows the form to create new API credentials](/images/add_new_credentials.png)
 
 1. Enter the Connection Name.\
    It should be unique/not configured previously.
@@ -120,6 +126,8 @@ Authentication for these APIs is done based on the following fields provided by 
 
 To generate an access token to AppZen's API gateway for authentication and validation you need to use this token to access AppZen resources. The token is valid for 60 minutes and AppZen allows the regeneration of the token.
 
+![Image: Token Generation Process - Diagram showing the token generation and refresh flow](/images/token_generation_flow.png)
+
 In case of expiration:
 
 1. You need to refresh the token to regain access.
@@ -131,40 +139,46 @@ POST https://api.appzen.com/api/v3/oauth2/token
 
 #### Body Parameters
 
-| Name           | Type   | Description                    | Required |
-| -------------- | ------ | ------------------------------ | -------- |
+| Name           | Type   | Description | Required |
+| -------------- | ------ | --- | -------- |
 | client\_id     | String | The unique client Id assigned. | Yes      |
 | client\_secret | String | The unique password assigned.  | Yes      |
-| scope          | String | The scope assigned.            | Yes      |
+| scope          | String | The scope assigned.<br>The scope can be:<br>* expense.report.read<br>* expense.report.write | Yes      |
 
 #### Sample Request
 
-curl -L -X POST 'https://api.appzen.com/enft/api/v3/oauth2/token' \\\
--H 'Content-Type: application/x-www-form-urlencoded' \\\
-\--data-urlencode 'client\_id=0oa6xxxx' \\\
-\--data-urlencode 'client\_secret=wfiWxxxx' \\\
-\--data-urlencode 'scope=expense.report.read expense.report.write'
+```bash
+curl -L -X POST 'https://api.appzen.com/enft/api/v3/oauth2/token' \
+-H 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'client_id=0oa6xxxx' \
+--data-urlencode 'client_secret=wfiWxxxx' \
+--data-urlencode 'scope=expense.report.read expense.report.write'
+```
 
 #### Sample Response
 
-**Success**
+##### Success
 
-{\
-"token\_type": "Bearer",\
-"expires\_in": 3600,\
-"access\_token": "eyJrxxxx",\
-"scope": "expense.report.read expense.report.write"\
+```json
+{
+    "token_type": "Bearer",
+    "expires_in": 3600,
+    "access_token": "eyJrxxxx",
+    "scope": "expense.report.read expense.report.write"
 }
+```
 
-**Failure**
+##### Failure
 
 The request fails if you do not provide the scope.
 
-{\
-"msg": "Internal Server Error: 400 Bad Request: "{"error":"invalid\_scope","error\_description":"The authorization server resource does not have any configured default scopes, 'scope' must be provided."}"",\
-"httpStatus": "INTERNAL\_SERVER\_ERROR",\
-"statusCode": 500\
+```json
+{
+    "msg": "Internal Server Error: 400 Bad Request: \"{\"error\":\"invalid_scope\",\"error_description\":\"The authorization server resource does not have any configured default scopes, 'scope' must be provided.\"}\"",
+    "httpStatus": "INTERNAL_SERVER_ERROR",
+    "statusCode": 500
 }
+```
 
 ## Status Code
 
