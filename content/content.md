@@ -148,33 +148,11 @@ POST https://api.appzen.com/api/v3/oauth2/token
 The following parameters are required when generating an access token:
 {% endhint %}
 
-{% tabs %}
-{% tab title="client_id" %}
-**Type:** String
-
-**Description:** The unique client Id assigned.
-
-**Required:** Yes
-{% endtab %}
-
-{% tab title="client_secret" %}
-**Type:** String
-
-**Description:** The unique password assigned.
-
-**Required:** Yes
-{% endtab %}
-
-{% tab title="scope" %}
-**Type:** String
-
-**Description:** The scope assigned. The scope can be:
-* expense.report.read
-* expense.report.write
-
-**Required:** Yes
-{% endtab %}
-{% endtabs %}
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| client_id | String | The unique client Id assigned. | Yes |
+| client_secret | String | The unique password assigned. | Yes |
+| scope | String | The scope assigned.<br>The scope can be:<br>* expense.report.read<br>* expense.report.write | Yes |
 
 ### Sample Request
 
@@ -219,61 +197,34 @@ If you don't provide the required scope, you'll receive an error response as sho
 The following status codes are returned by the API to indicate the result of your request.
 {% endhint %}
 
-{% tabs %}
-{% tab title="200" %}
-**Status:** OK
+### HTTP Status Codes
 
-**Description:** The request is successful
-{% endtab %}
+**200 - OK**  
+The request is successful
 
-{% tab title="201" %}
-**Status:** OK
+**201 - OK**  
+The request is successful
 
-**Description:** The request is successful
-{% endtab %}
+**400 - Bad Request**  
+The request failed due to a malformed request syntax. Check the requested URL, including the parameters.
 
-{% tab title="400" %}
-**Status:** Bad Request
+**401 - Unauthorized**  
+The request failed due to an authorization issue. For example, the Customer Key could be missing or invalid.
 
-**Description:** The request failed due to a malformed request syntax. Check the requested URL, including the parameters.
-{% endtab %}
+**402 - Request Failed**  
+The parameters were valid but the request failed.
 
-{% tab title="401" %}
-**Status:** Unauthorized
+**403 - Forbidden**  
+The API key doesn't have permissions to perform the request.
 
-**Description:** The request failed due to an authorization issue. For example, the Customer Key could be missing or invalid.
-{% endtab %}
+**404 - Not Found**  
+The requested resource doesn't exist. Check the requested URL.
 
-{% tab title="402" %}
-**Status:** Request Failed
+**429 - Too Many Requests**  
+Too many requests hit the API too quickly/limit has been consumed. We recommend an exponential backoff of your requests.
 
-**Description:** The parameters were valid but the request failed.
-{% endtab %}
-
-{% tab title="403" %}
-**Status:** Forbidden
-
-**Description:** The API key doesn't have permissions to perform the request.
-{% endtab %}
-
-{% tab title="404" %}
-**Status:** Not Found
-
-**Description:** The requested resource doesn't exist. Check the requested URL.
-{% endtab %}
-
-{% tab title="429" %}
-**Status:** Too Many Requests
-
-**Description:** Too many requests hit the API too quickly/limit has been consumed. We recommend an exponential backoff of your requests.
-{% endtab %}
-
-{% tab title="500, 502, 503, 504" %}
-**Status:** Server Errors
-
-**Description:** Something went wrong on AppZen's end. (These are rare.)
-{% endtab %}
-{% endtabs %}
+**500, 502, 503, 504 - Server Errors**  
+Something went wrong on AppZen's end. (These are rare.)
 
 ## SSO
 
@@ -366,34 +317,17 @@ Perform these steps in an incognito/private window (Firefox, Chrome, Edge):
 Here's an example of the SSO assertion data structure with sample values.
 {% endhint %}
 
-{% tabs %}
-{% tab title="firstName" %}
-John
-{% endtab %}
-
-{% tab title="lastName" %}
-Doe
-{% endtab %}
-
-{% tab title="email" %}
-john.doe@company.com
-{% endtab %}
-
-{% tab title="permissionGroup" %}
-* Auditor
-* Functional Admin
-{% endtab %}
-
-{% tab title="permissionOrg" %}
-* 102345 (org ID)
-* 13245 (org ID)
-{% endtab %}
-
-{% tab title="permissionEntity" %}
-* 32455556 (entity ID)
-* 32455231 (entity ID)
-{% endtab %}
-{% endtabs %}
+| Attribute Name | Attribute Value |
+| --- | --- |
+| firstName | John |
+| lastName | Doe |
+| email | john.doe@company.com |
+| permissionGroup | Auditor |
+| permissionGroup | Functional Admin |
+| permissionOrg | 102345 (org ID) |
+| permissionOrg | 13245 (org ID) |
+| permissionEntity | 32455556 (entity ID) |
+| permissionEntity | 32455231 (entity ID) |
 
 ## CSV
 
@@ -465,27 +399,13 @@ The process of syncing employees, including their organizational hierarchy, in A
 You can upload the following Master Data details into the system through a predefined CSV format from the Integrations Job Status page.
 {% endhint %}
 
-{% tabs %}
-{% tab title="Payment Terms" %}
-Terms and conditions regarding the settlement of any invoice that the supplier dictates.
-{% endtab %}
-
-{% tab title="Chart of Accounts (COA)" %}
-A list of all the general ledger accounts that an organization uses to allocate its expenses.
-{% endtab %}
-
-{% tab title="Entity" %}
-The organization in whose name the invoice is issued, i.e., an organization that has purchased goods and services from the supplier.
-{% endtab %}
-
-{% tab title="Supplier" %}
-Any organization that supplies goods or/and services and issues invoice to the buyer.
-{% endtab %}
-
-{% tab title="Purchase Order" %}
-An official document stating the items, their quantity, and the intended purchase price. A unique alphanumeric id that identifies such a document is the purchase order number.
-{% endtab %}
-{% endtabs %}
+| Template Type | Description |
+| --- | --- |
+| Payment Terms | Terms and conditions regarding the settlement of any invoice that the supplier dictates. |
+| Chart of Accounts (COA) | A list of all the general ledger accounts that an organization uses to allocate its expenses. |
+| Entity | The organization in whose name the invoice is issued, i.e., an organization that has purchased goods and services from the supplier. |
+| Supplier | Any organization that supplies goods or/and services and issues invoice to the buyer. |
+| Purchase Order | An official document stating the items, their quantity, and the intended purchase price. A unique alphanumeric id that identifies such a document is the purchase order number. |
 
 {% hint style="note" %}
 **Note:** There is a specific template for customers whose ERP is Ariba - please choose accordingly while downloading. For all other ERP systems, choose the AppZen template.
