@@ -150,11 +150,36 @@ POST https://api.appzen.com/api/v3/oauth2/token
 The following parameters are required when generating an access token:
 {% endhint %}
 
-| Name | Type | Description | Required |
-| :--- | :--- | :--- | :--- |
-| client_id | String | The unique client Id assigned. | Yes |
-| client_secret | String | The unique password assigned. | Yes |
-| scope | String | The scope assigned.<br>The scope can be:<br>* expense.report.read<br>* expense.report.write | Yes |
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Required</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>client_id</td>
+      <td>String</td>
+      <td>The unique client Id assigned.</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>client_secret</td>
+      <td>String</td>
+      <td>The unique password assigned.</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>scope</td>
+      <td>String</td>
+      <td>The scope assigned.<br>The scope can be:<br>* expense.report.read<br>* expense.report.write</td>
+      <td>Yes</td>
+    </tr>
+  </tbody>
+</table>
 
 ### Sample Request
 
@@ -205,17 +230,62 @@ If you don't provide the required scope, you'll receive an error response as sho
 The following status codes are returned by the API to indicate the result of your request.
 {% endhint %}
 
-| HTTP | Status | Code Summary |
-| :--- | :--- | :--- |
-| 200 | OK | The request is successful |
-| 201 | OK | The request is successful |
-| 400 | Bad Request | The request failed due to a malformed request syntax. Check the requested URL, including the parameters. |
-| 401 | Unauthorized | The request failed due to an authorization issue. For example, the Customer Key could be missing or invalid. |
-| 402 | Request Failed | The parameters were valid but the request failed. |
-| 403 | Forbidden | The API key doesn't have permissions to perform the request. |
-| 404 | Not Found | The requested resource doesn't exist. Check the requested URL. |
-| 429 | Too Many Requests | Too many requests hit the API too quickly/limit has been consumed. We recommend an exponential backoff of your requests. |
-| 500, 502, 503, 504 | Server Errors | Something went wrong on AppZen's end. (These are rare.) |
+<table>
+  <thead>
+    <tr>
+      <th>HTTP</th>
+      <th>Status</th>
+      <th>Code Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>200</td>
+      <td>OK</td>
+      <td>The request is successful</td>
+    </tr>
+    <tr>
+      <td>201</td>
+      <td>OK</td>
+      <td>The request is successful</td>
+    </tr>
+    <tr>
+      <td>400</td>
+      <td>Bad Request</td>
+      <td>The request failed due to a malformed request syntax. Check the requested URL, including the parameters.</td>
+    </tr>
+    <tr>
+      <td>401</td>
+      <td>Unauthorized</td>
+      <td>The request failed due to an authorization issue. For example, the Customer Key could be missing or invalid.</td>
+    </tr>
+    <tr>
+      <td>402</td>
+      <td>Request Failed</td>
+      <td>The parameters were valid but the request failed.</td>
+    </tr>
+    <tr>
+      <td>403</td>
+      <td>Forbidden</td>
+      <td>The API key doesn't have permissions to perform the request.</td>
+    </tr>
+    <tr>
+      <td>404</td>
+      <td>Not Found</td>
+      <td>The requested resource doesn't exist. Check the requested URL.</td>
+    </tr>
+    <tr>
+      <td>429</td>
+      <td>Too Many Requests</td>
+      <td>Too many requests hit the API too quickly/limit has been consumed. We recommend an exponential backoff of your requests.</td>
+    </tr>
+    <tr>
+      <td>500, 502, 503, 504</td>
+      <td>Server Errors</td>
+      <td>Something went wrong on AppZen's end. (These are rare.)</td>
+    </tr>
+  </tbody>
+</table>
 
 ## SSO
 
