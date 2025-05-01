@@ -1,0 +1,9 @@
+{
+  "title": "Integration API Documentation",
+  "description": "Documentation for the Integration API",
+  "plugins": [
+    "expandable-chapters",
+    "copy-code-button",
+    "search"
+  ]
+}
