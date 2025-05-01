@@ -128,20 +128,21 @@ Authentication for these APIs is done based on the following fields provided by 
 
 ## Token Generation
 
-To generate an access token to AppZen's API gateway for authentication and validation you need to use this token to access AppZen resources. The token is valid for 60 minutes and AppZen allows the regeneration of the token.
-
-{% hint style="warning" %}
-**Token Expiration:** The token is valid for 60 minutes only. After expiration, you will need to refresh the token to regain access, and the scope gained will be the same as the original grant.
+{% hint style="info" %}
+To access AppZen resources, you must generate an access token for authentication and validation. The token is valid for 60 minutes, after which it must be refreshed.
 {% endhint %}
 
-In case of expiration:
-
-1. You need to refresh the token to regain access.
-2. The scope gained will be the same as the original grant
+{% hint style="warning" %}
+**Token Expiration:** The token is valid for 60 minutes only. After expiration, you will need to refresh the token to regain access. The refreshed token will have the same scope as the original grant.
+{% endhint %}
 
 ### Request URI
 
+{% code overflow="wrap" lineNumbers="false" %}
+```
 POST https://api.appzen.com/api/v3/oauth2/token
+```
+{% endcode %}
 
 ### Body Parameters
 
@@ -159,7 +160,7 @@ The following parameters are required when generating an access token:
 
 {% code overflow="wrap" lineNumbers="false" %}
 ```bash
-curl -L -X POST 'https://api.appzen.com/enft/api/v3/oauth2/token' \
+curl -L -X POST 'https://api.appzen.com/api/v3/oauth2/token' \
 -H 'Content-Type: application/x-www-form-urlencoded' \
 --data-urlencode 'client_id=0oa6xxxx' \
 --data-urlencode 'client_secret=wfiWxxxx' \
@@ -183,8 +184,6 @@ curl -L -X POST 'https://api.appzen.com/enft/api/v3/oauth2/token' \
 {% endcode %}
 
 #### Failure
-
-The request fails if you do not provide the scope.
 
 {% hint style="danger" %}
 If you don't provide the required scope, you'll receive an error response as shown below.
