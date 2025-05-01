@@ -40,6 +40,16 @@ In this case, all requests to AppZen APIs are authenticated using OAuth 2.0 acce
 
 The Self-service credential generation now supports OAuth 2.0 for AppZen products. The introduction of OAuth 2.0 is for users opting for direct API based integration for their deployments, and for existing users with API Key based authorization. A new UI will be visible under the integration dropdown with the name ‘API Credentials’ from where API credentials can be generated without raising a support ticket. Currently, AppZen enables users with a System Admin Role to generate and regenerate these credentials.
 
+{% hint style="info" %}
+In this section, understand how to configure OAuth 2.0 through a self-service portal. The feature is currently only supported for Expense Audits, and future releases will also include Autonomous AP.
+
+**NOTE: OAuth 2.0 is for new customers who opt for API-based integration.**
+
+Even for existing customers who use API key-based authentication, it is available.
+
+Since OAuth 2.0 is an industry-standard protocol for authentication, AppZen ensures all across availability.
+{% endhint %}
+
 #### Request for OAuth 2.0 token
 
 You need to generate an access token to AppZen's API gateway for authentication and validation. For this, refer to Token Generation
@@ -99,10 +109,10 @@ Image: The Add New Credential page opens.
 6. For Testing, select Copy as cURL. The URL, ClientID, and selected scopes are included.\
    Import this URL request to testing platforms like Postman, and paste the saved client secret to get a response token.
 
-NOTE:
-
+{% hint style="note" %}
 * The bearer token expires in 60 minutes, and you need to refresh to regain access, and the scope is limited to the original grant.
 * Currently, the generation of API credentials directly from the UI is available for Expense Audit only.
+{% endhint %}
 
 #### Authentication in AP
 
@@ -119,6 +129,10 @@ Authentication for these APIs is done based on the following fields provided by 
 ## Token Generation
 
 To generate an access token to AppZen's API gateway for authentication and validation you need to use this token to access AppZen resources. The token is valid for 60 minutes and AppZen allows the regeneration of the token.
+
+{% hint style="warning" %}
+**Token Expiration:** The token is valid for 60 minutes only. After expiration, you will need to refresh the token to regain access, and the scope gained will be the same as the original grant.
+{% endhint %}
 
 In case of expiration:
 
@@ -167,6 +181,10 @@ curl -L -X POST 'https://api.appzen.com/enft/api/v3/oauth2/token' \
 #### Failure
 
 The request fails if you do not provide the scope.
+
+{% hint style="danger" %}
+If you don't provide the required scope, you'll receive an error response as shown below.
+{% endhint %}
 
 {% code overflow="wrap" lineNumbers="false" %}
 ```json
@@ -321,7 +339,9 @@ You can upload the following Master Data details into the system through a prede
 * Supplier - Any organization that supplies goods or/and services and issues invoice to the buyer.
 * Purchase Order - An official document stating the items, their quantity, and the intended purchase price. A unique alphanumeric id that identifies such a document is the purchase order number.
 
-Note: There is a specific template for customers whose ERP is Ariba - please choose accordingly while downloading. For all other ERP systems, choose the AppZen template.
+{% hint style="note" %}
+**Note:** There is a specific template for customers whose ERP is Ariba - please choose accordingly while downloading. For all other ERP systems, choose the AppZen template.
+{% endhint %}
 
 For performing Employee Hierarchy Sync alongside uploading all the details of Employee, choose the Employee option and download the relevant CSV template.
 
