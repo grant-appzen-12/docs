@@ -279,17 +279,52 @@ D. If issues persist, contact support@appzen.com.
 Here's an example of the SSO assertion data structure with sample values.
 {% endhint %}
 
-| Attribute Name | Attribute Value |
-| :------------ | :-------------- |
-| firstName     | John            |
-| lastName      | Doe             |
-| email         | john.doe@company.com |
-| permissionGroup | Auditor        |
-| permissionGroup | Functional Admin |
-| permissionOrg | 102345 (org ID) |
-| permissionOrg | 13245 (org ID)  |
-| permissionEntity | 32455556 (entity ID) |
-| permissionEntity | 32455231 (entity ID) |
+<table>
+  <thead>
+    <tr>
+      <th>Attribute Name</th>
+      <th>Attribute Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>firstName</td>
+      <td>John</td>
+    </tr>
+    <tr>
+      <td>lastName</td>
+      <td>Doe</td>
+    </tr>
+    <tr>
+      <td>email</td>
+      <td>john.doe@company.com</td>
+    </tr>
+    <tr>
+      <td>permissionGroup</td>
+      <td>Auditor</td>
+    </tr>
+    <tr>
+      <td>permissionGroup</td>
+      <td>Functional Admin</td>
+    </tr>
+    <tr>
+      <td>permissionOrg</td>
+      <td>102345 (org ID)</td>
+    </tr>
+    <tr>
+      <td>permissionOrg</td>
+      <td>13245 (org ID)</td>
+    </tr>
+    <tr>
+      <td>permissionEntity</td>
+      <td>32455556 (entity ID)</td>
+    </tr>
+    <tr>
+      <td>permissionEntity</td>
+      <td>32455231 (entity ID)</td>
+    </tr>
+  </tbody>
+</table>
 
 ## CSV
 
