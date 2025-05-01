@@ -289,31 +289,45 @@ The following status codes are returned by the API to indicate the result of you
 
 ## SSO
 
+{% hint style="info" %}
+Single Sign-On (SSO) allows your users to authenticate through your Identity Provider (IdP) when accessing AppZen.
+{% endhint %}
+
 ### Introduction
 
-1. Only users marked as 'External' in the User module in System Admin will be able to log in using SSO.
-2. Claims-based authorization allows roles and organization access to be assigned to users using your IDP.
-3. On enabling Claims Based Authorization, role/org access will no longer be allowed in Appzen.
-   * In case of issues, try the following debugging steps.
-   * Users are not able to see the certain feature as per their role - this could be due to the user not signing out of IDP. Ask the user to log in from an incognito window.
-4. Click on 'Download Authorization Strings' to view the roles, organization (Expense Audit), and entities (Autonomous AP) expected by Appzen.
-5. View documentation to preview sample assertion schema.
+{% hint style="info" %}
+Before setting up SSO, please understand these key points:
+* Only users marked as 'External' in the User module in System Admin will be able to log in using SSO.
+* Claims-based authorization allows roles and organization access to be assigned to users using your IDP.
+* On enabling Claims Based Authorization, role/org access will no longer be allowed in Appzen.
+{% endhint %}
+
+{% hint style="warning" %}
+**Troubleshooting**: If users cannot see certain features as per their role - this could be due to the user not signing out of IDP. Ask the user to log in from an incognito window.
+{% endhint %}
+
+1. Click on 'Download Authorization Strings' to view the roles, organization (Expense Audit), and entities (Autonomous AP) expected by Appzen.
+2. View documentation to preview sample assertion schema.
 
 ### Configuration
 
-1. Appzen only supports SP-based SSO.
-2. To enable SSO, upload a metadata file from your IDP in Appzen.
-   1. The file must have a .XML extension.
-   2. The following information must be present in the file:
-      1. IDP Issuer URI - can be found against the attribute entityID= in the meta-data file
-      2. IDP Single Sign-on URL - can be found against the Location= in the following tag: SingleSignOnService\
-         Binding="urn:oasis:names:tc:SAML:2.0:bindings: HTTP-Redirect" Location="
-      3. IDP Signature certificate: the certificate can be found in the metadata file from the following tag:ds: X509Certificate
-3. Appzen will generate the following once the metadata file is uploaded.
-   1. Assertion consumer service (ACS) URL
-   2. Audience URI
-   3. Metadata file
-4. Download the metadata file or use the URL/URI and configure it in your IDP.
+{% hint style="info" %}
+AppZen only supports SP-based SSO. To enable SSO, you'll need to upload a metadata file from your IDP.
+{% endhint %}
+
+1. Upload a metadata file from your IDP in Appzen.
+   * The file must have a .XML extension.
+   * The following information must be present in the file:
+     * IDP Issuer URI - can be found against the attribute entityID= in the meta-data file
+     * IDP Single Sign-on URL - can be found against the Location= in the following tag: SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings: HTTP-Redirect" Location="
+     * IDP Signature certificate: the certificate can be found in the metadata file from the following tag:ds: X509Certificate
+
+2. Appzen will generate the following once the metadata file is uploaded:
+   * Assertion consumer service (ACS) URL
+   * Audience URI
+   * Metadata file
+
+3. Download the metadata file or use the URL/URI and configure it in your IDP.
 
 ### Testing
 
@@ -321,27 +335,42 @@ Once uploaded, test by clicking on 'Login with SSO' on this link using a user ID
 
 ### Debugging
 
-1. In case of issues, try the following debugging steps.
+{% hint style="info" %}
+Follow these steps if you encounter issues with SSO authentication.
+{% endhint %}
 
-A. If you are not able to access the Production Environment.
+#### Access Issues
 
-i. Check if you are able to open the AppZen page.
+{% hint style="warning" %}
+**If you are not able to access the Production Environment:**
+{% endhint %}
 
-ii. If you are unable to open this page from within your VPN or network, check if you can access the page outside the VPN/network or from your mobile browser.
+1. Check if you are able to open the AppZen page.
 
-iii. If you are able to access it outside the VPN/network but not from within, it means their internal IT team may be blocking the site. Reach out to your internal IT team and check if the AppZen site is being blocked.
+2. If you are unable to open this page from within your VPN or network:
+   * Check if you can access the page outside the VPN/network or from your mobile browser.
+   * If you are able to access it outside the VPN/network but not from within, it means your internal IT team may be blocking the site. Reach out to your internal IT team and check if the AppZen site is being blocked.
 
-B. If you are unable to login
+#### Login Issues
 
-i. If you are able to open the page from within the network and are unable to log in, follow the steps given below (Perform below steps in an incognito/private window (Firefox, Chrome, Edge).
+{% hint style="warning" %}
+**If you are able to open the page but unable to log in:**
+{% endhint %}
 
-a. If you do not get redirected to your IDP - check the network tab for any failing APIs. If there is any API failing with a 401 or 400, right-click on the failing API and copy it as Curl. Share logs with Appzen support.
+Perform these steps in an incognito/private window (Firefox, Chrome, Edge):
 
-b. If login fails with 400 OKTA Page - Share the SAML tracer logs with Appzen support.
+1. If you do not get redirected to your IDP:
+   * Check the network tab for any failing APIs.
+   * If there is any API failing with a 401 or 400, right-click on the failing API and copy it as Curl.
+   * Share logs with AppZen support.
 
-C. If you are getting an OKTA 400 error, please ensure that the IDP URL is added correctly. It must be the same as that provided in the metadata file.
+2. If login fails with 400 OKTA Page:
+   * Share the SAML tracer logs with AppZen support.
 
-D. If issues persist, contact support@appzen.com.
+3. If you are getting an OKTA 400 error:
+   * Ensure that the IDP URL is added correctly. It must be the same as that provided in the metadata file.
+
+4. If issues persist, contact support@appzen.com.
 
 ### Sample Assertion Data
 
@@ -400,60 +429,102 @@ Here's an example of the SSO assertion data structure with sample values.
 
 ### Introduction
 
-A CSV file is a plain text file that stores comma-delimited data in a tabular format. The abbreviation CSV stands for "comma-separated values." CSV files are a simple, straightforward, lightweight, and flexible method for storing relational and tabular data. CSV files have a wide variety of applications and benefits. CSV files are:
+{% hint style="info" %}
+CSV (comma-separated values) files provide a simple, lightweight way to transfer data between different systems, especially when API integration isn't available.
+{% endhint %}
 
-* Easy to read: Unlike some other data storage formats, CSV files are easily readable by humans, as they store information in plain text.
-* Lightweight: These files have a small footprint. The only additional space they take up is the header row and the commas between each data field.
+A CSV file is a plain text file that stores comma-delimited data in a tabular format. The abbreviation CSV stands for "comma-separated values." CSV files have several advantages:
 
-ERP’s often need to move large amounts of data (such as catalogs, orders, or historical data) from one system to another for processing. The issue is that how one system structures and accepts data might be different from the destination system.
+* **Easy to read**: Unlike some other data storage formats, CSV files are easily readable by humans, as they store information in plain text.
+* **Lightweight**: These files have a small footprint. The only additional space they take up is the header row and the commas between each data field.
 
-Many rely on integration that uses CSV (comma-separated values) files to export and import text files of their data between systems. CSVs are a universal file type that many systems support, and they are comparatively easier to manage.
+ERPs often need to move large amounts of data (such as catalogs, orders, or historical data) from one system to another for processing. The issue is that how one system structures and accepts data might be different from the destination system.
 
-Listed below are some of the advantages of this -
+{% hint style="info" %}
+Many organizations rely on integration that uses CSV files to export and import text files of their data between systems. CSVs are a universal file type that many systems support, and they are comparatively easier to manage.
+{% endhint %}
 
-1. Keep and Connect Systems without APIs
+#### Advantages of CSV Integration
 
-Not all software systems have available APIs for integration. This is often the case for older “legacy” software. Integrating with these systems must be done without using APIs, meaning your best option might be file-based integration.
+1. **Keep and Connect Systems without APIs**
+   * Not all software systems have available APIs for integration. This is often the case for older "legacy" software.
+   * Integrating with these systems must be done without using APIs, meaning your best option might be file-based integration.
+   * Most systems at least accept CSV via a manual import process, no matter the age of the software. Some offer the ability to automate the CSV import by pointing to an SFTP server.
 
-Most systems at least accept CSV via a manual import process, no matter the age of the software. Some offer the ability to automate the CSV import by pointing to an SFTP server.
+2. **Non-proprietary**
+   * CSV files are non-proprietary to any specific software vendor.
+   * Creating and sharing a CSV is a generic way to handle data. This makes them easy to interact with and share among people and systems.
+   * You can create CSVs by leveraging Excel or other spreadsheet software and most people are comfortable handling them this way.
+   * Regardless of the specific software you're using, being able to import and export a CSV file is not unique to that software or brand.
 
-2. Non-proprietary
-
-CSV files are non-proprietary to any specific software vendor. Creating and sharing a CSV is a generic way to handle data. This makes them easy to interact with and share among people and systems. You can create CSVs by leveraging Excel or other spreadsheet software and most people are comfortable handling them this way. Regardless of the specific software you’re using, being able to import and export a CSV file is not unique to that software or brand.
-
-3. Easier to Create Files
-
-Since CSVs are plain-text files, it is easier for a web developer or other members of your team to create, view, and validate the data as a spreadsheet. All you need is a header row at the top and subsequent rows of data. You will be able to manipulate the data to organize it as you need. It is then easy to share this data across different systems.
+3. **Easier to Create Files**
+   * Since CSVs are plain-text files, it is easier for a web developer or other members of your team to create, view, and validate the data as a spreadsheet.
+   * All you need is a header row at the top and subsequent rows of data. You will be able to manipulate the data to organize it as you need.
+   * It is then easy to share this data across different systems.
 
 ### CSV Integration
 
+{% hint style="info" %}
 AppZen's System Integration Framework provides the ability to integrate AppZen with supported ERP systems. Using the Integration Framework makes it easy to configure, schedule, and view integration jobs and their statuses.
+{% endhint %}
 
 AppZen supports Master Data ingestion for Autonomous AP and Employee Sync using the CSV route.
 
-Steps to set up:
-
+{% hint style="info" %}
+**Setup Instructions:**
 1. Select System Integrations from the Integrations dropdown
 2. Click on the Add New Integration Source and setup the Integration Source
 3. Choose Appzen - SFTP as the source and provide a name
 4. Go to Scheduling, and choose the integration source defined above
 5. You can view the integration status on the Integrations Job Status page
+{% endhint %}
 
 ### CSV - SFTP Integration for Master Data and Employee Sync
 
-The CSV - SFTP Integration type is used to manually transfer and receive data in CSV format from the customer’s ERP. The data to be ingested in the AppZen system must be as per the CSV format (template) set for a specific record type. Templates for these record types can be downloaded from the Autonomous AP Scheduling tab of the ‘System Integrations’ screen.
+{% hint style="info" %}
+The CSV - SFTP Integration type enables manual transfer of data in CSV format from your ERP system to AppZen. The data must follow the specific CSV format (template) for each record type.
+{% endhint %}
+
+The data to be ingested in the AppZen system must be as per the CSV format (template) set for a specific record type. Templates for these record types can be downloaded from the Autonomous AP Scheduling tab of the 'System Integrations' screen.
 
 The process of syncing employees, including their organizational hierarchy, in AppZen can be facilitated wherein users can provide the list of employees in a CSV file via SFTP. The Employee details can also be uploaded through the System Admin screen.
 
 ### CSV Templates
 
-You can upload the following Master Data details into the system through a predefined CSV format from the Integrations Job Status page -
+{% hint style="info" %}
+You can upload the following Master Data details into the system through a predefined CSV format from the Integrations Job Status page.
+{% endhint %}
 
-* Payment Terms - Terms and conditions regarding the settlement of any invoice that the supplier dictates.
-* Chart of Accounts (COA) - A list of all the general ledger accounts that an organization uses to allocate its expenses.
-* Entity - The organization in whose name the invoice is issued, i.e., an organization that has purchased goods and services from the supplier.
-* Supplier - Any organization that supplies goods or/and services and issues invoice to the buyer.
-* Purchase Order - An official document stating the items, their quantity, and the intended purchase price. A unique alphanumeric id that identifies such a document is the purchase order number.
+<table>
+  <thead>
+    <tr>
+      <th>Template Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Payment Terms</td>
+      <td>Terms and conditions regarding the settlement of any invoice that the supplier dictates.</td>
+    </tr>
+    <tr>
+      <td>Chart of Accounts (COA)</td>
+      <td>A list of all the general ledger accounts that an organization uses to allocate its expenses.</td>
+    </tr>
+    <tr>
+      <td>Entity</td>
+      <td>The organization in whose name the invoice is issued, i.e., an organization that has purchased goods and services from the supplier.</td>
+    </tr>
+    <tr>
+      <td>Supplier</td>
+      <td>Any organization that supplies goods or/and services and issues invoice to the buyer.</td>
+    </tr>
+    <tr>
+      <td>Purchase Order</td>
+      <td>An official document stating the items, their quantity, and the intended purchase price. A unique alphanumeric id that identifies such a document is the purchase order number.</td>
+    </tr>
+  </tbody>
+</table>
 
 {% hint style="note" %}
 **Note:** There is a specific template for customers whose ERP is Ariba - please choose accordingly while downloading. For all other ERP systems, choose the AppZen template.
