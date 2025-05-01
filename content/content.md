@@ -139,6 +139,7 @@ POST https://api.appzen.com/api/v3/oauth2/token
 
 ### Sample Request
 
+{% code overflow="wrap" lineNumbers="false" %}
 ```bash
 curl -L -X POST 'https://api.appzen.com/enft/api/v3/oauth2/token' \
 -H 'Content-Type: application/x-www-form-urlencoded' \
@@ -146,31 +147,36 @@ curl -L -X POST 'https://api.appzen.com/enft/api/v3/oauth2/token' \
 --data-urlencode 'client_secret=wfiWxxxx' \
 --data-urlencode 'scope=expense.report.read expense.report.write'
 ```
+{% endcode %}
 
 ### Sample Response
 
 #### Success
 
+{% code overflow="wrap" lineNumbers="false" %}
 ```json
 {
-    "token_type": "Bearer",
-    "expires_in": 3600,
-    "access_token": "eyJrxxxx",
-    "scope": "expense.report.read expense.report.write"
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "access_token": "eyJrxxxx",
+  "scope": "expense.report.read expense.report.write"
 }
 ```
+{% endcode %}
 
 #### Failure
 
 The request fails if you do not provide the scope.
 
+{% code overflow="wrap" lineNumbers="false" %}
 ```json
 {
-    "msg": "Internal Server Error: 400 Bad Request: \"{\"error\":\"invalid_scope\",\"error_description\":\"The authorization server resource does not have any configured default scopes, 'scope' must be provided.\"}\"",
-    "httpStatus": "INTERNAL_SERVER_ERROR",
-    "statusCode": 500
+  "msg": "Internal Server Error: 400 Bad Request: \"{\"error\":\"invalid_scope\",\"error_description\":\"The authorization server resource does not have any configured default scopes, 'scope' must be provided.\"}\"",
+  "httpStatus": "INTERNAL_SERVER_ERROR",
+  "statusCode": 500
 }
 ```
+{% endcode %}
 
 ## Status Code
 
