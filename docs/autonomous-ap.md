@@ -8,6 +8,21 @@ AppZen Autonomous AP delivers autonomous processing for all invoices sent to you
 
 Autonomous AP automates the processing of non-digital invoices (PDF and standard images) and posts processed information back to the customer's ERP systems. It is an AI-first application that understands invoice content, context, and meaning, enforces company spend policies, performs 3-way PO matching, predicts GL and cost centers, audits and verifies vendor information, prepares each invoice for workflow approval, and posts processed invoices in the ERP system.
 
+## Getting Started
+
+To get started with Autonomous AP:
+
+1. Request API credentials from your AppZen account manager
+2. Configure your master data synchronization (vendors, chart of accounts, etc.)
+3. Set up your preferred integration method (API or CSV)
+4. Begin submitting invoices for processing
+
+{% hint style="warning" %}
+All AP configurations should be tested in a sandbox environment before deploying to production. This ensures proper data mapping and workflow configurations.
+{% endhint %}
+
+For further assistance, contact support@appzen.com.
+
 ## API Reference Overview
 
 This page provides an understanding of how the Autonomous AP APIs behave. AppZen APIs are organized around REST as follows:
@@ -93,31 +108,511 @@ Authentication for Autonomous AP APIs is done based on the following fields prov
 
 ## API Endpoints
 
-### Invoice Management APIs
+AppZen Autonomous AP APIs are categorized into two main groups:
+
+### Master Data APIs
+
+| API | Description |
+| --- | --- |
+| Payment Terms | APIs to manage payment terms for vendor invoices |
+| Chart of Accounts | APIs to manage GL account codes and cost centers |
+| Entities | APIs to manage organizational entities |
+| Suppliers | APIs to manage supplier/vendor information |
+| Purchase Orders | APIs to manage purchase order data for matching |
+| Unit of Measure | APIs to manage standardized units of measure |
+| VAT | APIs to manage Value Added Tax configurations |
+
+### Transaction Data APIs
 
 | API | Description |
 | --- | --- |
 | Submit Invoice | Upload an invoice document for processing |
 | Get Processing Status | Check the current status of an invoice in the processing pipeline |
 | Retrieve Invoice Data | Get the extracted data for a processed invoice |
+| Audit Results | Retrieve audit analysis results for processed invoices |
 | Update Invoice | Update or correct information for an existing invoice |
 
-### Master Data APIs
+{% hint style="info" %}
+Please note the specific order of ingestion of an invoice. Follow this order while making the API calls for optimal processing.
+{% endhint %}
 
-| API | Description |
+## Master Data APIs
+
+### Payment Terms API
+
+The Payment Terms API allows you to create, retrieve, and manage payment term configurations for your vendors.
+
+#### Get Payment Terms
+
+**Request URI**
+```
+GET https://api.appzen.com/dictionary-data-services/payment-terms
+```
+
+**Header Parameters**
+
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| customer-id | String | The unique customer ID assigned by AppZen | Yes |
+| x-api-key | String | The API key provided by AppZen | Yes |
+| customer-key | String | The customer key provided by AppZen | Yes |
+
+**Sample Request**
+
+```bash
+curl -X GET "https://api.appzen.com/dictionary-data-services/payment-terms" \
+  -H "customer-id: your_customer_id" \
+  -H "x-api-key: your_api_key" \
+  -H "customer-key: your_customer_key"
+```
+
+**Sample Response**
+
+```json
+{
+  "status": "success",
+  "message": "Successfully retrieved payment terms",
+  "data": [
+    {
+      "id": "PT001",
+      "name": "Net 30",
+      "description": "Payment due within 30 days",
+      "days": 30,
+      "discount_percentage": 0,
+      "discount_days": 0
+    },
+    {
+      "id": "PT002",
+      "name": "2/10 Net 30",
+      "description": "2% discount if paid within 10 days, otherwise due in 30 days",
+      "days": 30,
+      "discount_percentage": 2,
+      "discount_days": 10
+    }
+  ]
+}
+```
+
+### Chart of Accounts API
+
+The Chart of Accounts API allows you to manage GL accounts and cost centers for invoice coding.
+
+#### Get Chart of Accounts
+
+**Request URI**
+```
+GET https://api.appzen.com/dictionary-data-services/chart-of-accounts
+```
+
+**Header Parameters**
+
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| customer-id | String | The unique customer ID assigned by AppZen | Yes |
+| x-api-key | String | The API key provided by AppZen | Yes |
+| customer-key | String | The customer key provided by AppZen | Yes |
+
+**Query Parameters**
+
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| page | Integer | Page number for pagination | No |
+| size | Integer | Number of items per page | No |
+
+**Sample Request**
+
+```bash
+curl -X GET "https://api.appzen.com/dictionary-data-services/chart-of-accounts?page=1&size=10" \
+  -H "customer-id: your_customer_id" \
+  -H "x-api-key: your_api_key" \
+  -H "customer-key: your_customer_key"
+```
+
+**Sample Response**
+
+```json
+{
+  "status": "success",
+  "message": "Successfully retrieved chart of accounts",
+  "data": {
+    "items": [
+      {
+        "id": "6505",
+        "name": "Office Supplies",
+        "description": "Expenses for office supplies",
+        "account_type": "Expense",
+        "active": true
+      },
+      {
+        "id": "6510",
+        "name": "Office Equipment",
+        "description": "Expenses for office equipment",
+        "account_type": "Expense",
+        "active": true
+      }
+    ],
+    "pagination": {
+      "current_page": 1,
+      "total_pages": 5,
+      "total_items": 48,
+      "items_per_page": 10
+    }
+  }
+}
+```
+
+### Suppliers API
+
+The Suppliers API allows you to manage vendor information for invoice processing.
+
+#### Get Suppliers
+
+**Request URI**
+```
+GET https://api.appzen.com/dictionary-data-services/suppliers
+```
+
+**Header Parameters**
+
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| customer-id | String | The unique customer ID assigned by AppZen | Yes |
+| x-api-key | String | The API key provided by AppZen | Yes |
+| customer-key | String | The customer key provided by AppZen | Yes |
+
+**Query Parameters**
+
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| name | String | Filter by supplier name | No |
+| tax_id | String | Filter by tax ID | No |
+| page | Integer | Page number for pagination | No |
+| size | Integer | Number of items per page | No |
+
+**Sample Request**
+
+```bash
+curl -X GET "https://api.appzen.com/dictionary-data-services/suppliers?name=Acme&page=1&size=10" \
+  -H "customer-id: your_customer_id" \
+  -H "x-api-key: your_api_key" \
+  -H "customer-key: your_customer_key"
+```
+
+**Sample Response**
+
+```json
+{
+  "status": "success",
+  "message": "Successfully retrieved suppliers",
+  "data": {
+    "items": [
+      {
+        "id": "S001",
+        "name": "Acme Office Supplies",
+        "tax_id": "123456789",
+        "address": {
+          "street": "123 Main St",
+          "city": "Anytown",
+          "state": "CA",
+          "postal_code": "12345",
+          "country": "US"
+        },
+        "payment_terms": "Net 30",
+        "status": "active"
+      },
+      {
+        "id": "S002",
+        "name": "Acme Technology",
+        "tax_id": "987654321",
+        "address": {
+          "street": "456 Tech Blvd",
+          "city": "Silicon Valley",
+          "state": "CA",
+          "postal_code": "94043",
+          "country": "US"
+        },
+        "payment_terms": "2/10 Net 30",
+        "status": "active"
+      }
+    ],
+    "pagination": {
+      "current_page": 1,
+      "total_pages": 3,
+      "total_items": 25,
+      "items_per_page": 10
+    }
+  }
+}
+```
+
+#### Create Supplier
+
+**Request URI**
+```
+POST https://api.appzen.com/dictionary-data-services/suppliers
+```
+
+**Header Parameters**
+
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| customer-id | String | The unique customer ID assigned by AppZen | Yes |
+| x-api-key | String | The API key provided by AppZen | Yes |
+| customer-key | String | The customer key provided by AppZen | Yes |
+| Content-Type | String | application/json | Yes |
+
+**Request Body Parameters**
+
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| name | String | Supplier name | Yes |
+| tax_id | String | Tax identification number | Yes |
+| address | Object | Address information | Yes |
+| payment_terms | String | Payment terms ID | No |
+| status | String | Supplier status (active/inactive) | No |
+
+**Sample Request**
+
+```bash
+curl -X POST "https://api.appzen.com/dictionary-data-services/suppliers" \
+  -H "customer-id: your_customer_id" \
+  -H "x-api-key: your_api_key" \
+  -H "customer-key: your_customer_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "New Supplier Inc",
+    "tax_id": "555666777",
+    "address": {
+      "street": "789 Vendor Lane",
+      "city": "Suppliertown",
+      "state": "NY",
+      "postal_code": "10001",
+      "country": "US"
+    },
+    "payment_terms": "PT001",
+    "status": "active"
+  }'
+```
+
+**Sample Response**
+
+```json
+{
+  "status": "success",
+  "message": "Supplier successfully created",
+  "data": {
+    "id": "S123",
+    "name": "New Supplier Inc",
+    "tax_id": "555666777",
+    "address": {
+      "street": "789 Vendor Lane",
+      "city": "Suppliertown",
+      "state": "NY",
+      "postal_code": "10001",
+      "country": "US"
+    },
+    "payment_terms": "PT001",
+    "status": "active",
+    "created_at": "2023-05-01T14:30:00Z"
+  }
+}
+```
+
+### Purchase Orders API
+
+The Purchase Orders API allows you to manage purchase orders for invoice matching.
+
+#### Get Purchase Orders
+
+**Request URI**
+```
+GET https://api.appzen.com/dictionary-data-services/purchase-orders
+```
+
+**Header Parameters**
+
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| customer-id | String | The unique customer ID assigned by AppZen | Yes |
+| x-api-key | String | The API key provided by AppZen | Yes |
+| customer-key | String | The customer key provided by AppZen | Yes |
+
+**Query Parameters**
+
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| po_number | String | Filter by PO number | No |
+| supplier_id | String | Filter by supplier ID | No |
+| status | String | Filter by status (open/closed) | No |
+| page | Integer | Page number for pagination | No |
+| size | Integer | Number of items per page | No |
+
+**Sample Request**
+
+```bash
+curl -X GET "https://api.appzen.com/dictionary-data-services/purchase-orders?supplier_id=S001&status=open" \
+  -H "customer-id: your_customer_id" \
+  -H "x-api-key: your_api_key" \
+  -H "customer-key: your_customer_key"
+```
+
+**Sample Response**
+
+```json
+{
+  "status": "success",
+  "message": "Successfully retrieved purchase orders",
+  "data": {
+    "items": [
+      {
+        "po_number": "PO-2023-0456",
+        "supplier_id": "S001",
+        "issue_date": "2023-04-01",
+        "total_amount": 2500.00,
+        "currency": "USD",
+        "status": "open",
+        "lines": [
+          {
+            "line_number": 1,
+            "description": "Office Desk - Standard",
+            "quantity": 5,
+            "unit_price": 450.00,
+            "total": 2250.00,
+            "unit_of_measure": "EA",
+            "gl_code": "6510"
+          },
+          {
+            "line_number": 2,
+            "description": "Shipping",
+            "quantity": 1,
+            "unit_price": 250.00,
+            "total": 250.00,
+            "unit_of_measure": "EA",
+            "gl_code": "6530"
+          }
+        ]
+      }
+    ],
+    "pagination": {
+      "current_page": 1,
+      "total_pages": 1,
+      "total_items": 1,
+      "items_per_page": 10
+    }
+  }
+}
+```
+
+## Transaction Data APIs
+
+### Generate Upload URL API
+
+Before submitting invoice documents, you need to generate a secure upload URL.
+
+**Request URI**
+```
+GET https://api.appzen.com/dictionary-data-services/generate-upload-url
+```
+
+**Header Parameters**
+
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| customer-id | String | The unique customer ID assigned by AppZen | Yes |
+| x-api-key | String | The API key provided by AppZen | Yes |
+| customer-key | String | The customer key provided by AppZen | Yes |
+
+**Sample Request**
+
+```bash
+curl -X GET "https://api.appzen.com/dictionary-data-services/generate-upload-url" \
+  -H "customer-id: your_customer_id" \
+  -H "x-api-key: your_api_key" \
+  -H "customer-key: your_customer_key"
+```
+
+**Sample Response**
+
+```json
+{
+  "status": "success",
+  "message": "Upload URL generated successfully",
+  "data": {
+    "upload_url": "https://appzen-storage.s3.amazonaws.com/invoices/upload?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=...",
+    "upload_id": "inv_upload_1234567890",
+    "expires_in": 300
+  }
+}
+```
+
+### Invoice Audit Results API
+
+The Invoice Audit Results API allows you to retrieve audit analysis results for processed invoices.
+
+**Request URI**
+```
+GET https://api.appzen.com/dictionary-data-services/invoice/audit-results
+```
+
+**Header Parameters**
+
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| customer-id | String | The unique customer ID assigned by AppZen | Yes |
+| x-api-key | String | The API key provided by AppZen | Yes |
+| customer-key | String | The customer key provided by AppZen | Yes |
+
+**Query Parameters**
+
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| uuid | String | The invoice UUID | Yes |
+| supplier-id | String | The supplier ID | No |
+
+**Sample Request**
+
+```bash
+curl -X GET "https://api.appzen.com/dictionary-data-services/invoice/audit-results?uuid=testUUID&supplier-id=11" \
+  -H "accept: application/json" \
+  -H "x-api-key: R7wsFxxxx" \
+  -H "customer-id: 1004xxxx" \
+  -H "customer-key: 15d1xxxx"
+```
+
+**Sample Response**
+
+```json
+[
+  {
+    "audit_results": {
+      "uuid": "08edd8d9-cc1c-45e1-8bbb-29ffb7e3a404",
+      "invoice-number": "MHEIN00051739",
+      "invoice-id": "77887788",
+      "supplier-id": "7082403",
+      "rules": [
+        {
+          "rule_code": "duplicate_invoice_amount",
+          "risk_message": "No duplicate detected",
+          "risk_results": {
+            "risk_level": "LOW"
+          }
+        }
+      ],
+      "risk_level": "LOW",
+      "status": "Approved"
+    }
+  }
+]
+```
+
+**Response Codes**
+
+| Response Code | Description |
 | --- | --- |
-| Sync Vendors | Synchronize vendor master data from your ERP |
-| Sync Chart of Accounts | Synchronize GL account codes and cost centers |
-| Sync Purchase Orders | Synchronize PO data for matching |
-| Sync Payments | Update payment information for processed invoices |
-
-### Workflow APIs
-
-| API | Description |
-| --- | --- |
-| Get Workflow Status | Retrieve the current approval status for an invoice |
-| Submit Approval | Submit an approval decision for an invoice |
-| Route Invoice | Change the routing of an invoice to a different approver |
+| 200 | The request is successful |
+| 404 | Resource not found |
+| 401 | Unauthorized - invalid credentials |
+| 500 | Server error |
 
 ## Invoice Submission API
 
@@ -446,17 +941,24 @@ For organizations using CSV-based integration, see the [CSV](csv.md) section for
 When uploading CSV files to the SFTP server, ensure that the file naming conventions follow the specified pattern to ensure proper processing. Files should be named according to the format: `<file_type>_<date>_<sequence>.csv`, for example: `invoices_20230501_001.csv`
 {% endhint %}
 
-## Getting Started
+## Integration Best Practices
 
-To get started with Autonomous AP:
+When integrating with the Autonomous AP APIs, follow these best practices:
 
-1. Request API credentials from your AppZen account manager
-2. Configure your master data synchronization (vendors, chart of accounts, etc.)
-3. Set up your preferred integration method (API or CSV)
-4. Begin submitting invoices for processing
+1. **Authentication Security**: Store your API credentials securely and never expose them in client-side code.
+
+2. **Error Handling**: Implement robust error handling for all API responses, including retries for transient issues.
+
+3. **Pagination Handling**: When retrieving lists of resources, always implement proper pagination to handle large datasets efficiently.
+
+4. **Rate Limiting**: Respect the rate limits (20 requests per second per data type) to avoid throttling.
+
+5. **WebHooks for Notifications**: Instead of polling for status updates, consider implementing webhook listeners for push notifications on invoice status changes.
+
+6. **Idempotency**: Use unique identifiers for each submission to avoid duplicate processing in case of network issues.
+
+7. **Testing**: Always validate your integration in a sandbox environment before deploying to production.
 
 {% hint style="warning" %}
-All AP configurations should be tested in a sandbox environment before deploying to production. This ensures proper data mapping and workflow configurations.
+Consider implementing a token-based caching strategy to avoid making redundant API calls, especially for master data that changes infrequently.
 {% endhint %}
-
-For further assistance, contact support@appzen.com.
