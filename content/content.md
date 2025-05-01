@@ -138,11 +138,9 @@ To access AppZen resources, you must generate an access token for authentication
 
 ### Request URI
 
-{% code overflow="wrap" lineNumbers="false" %}
-```
+```bash
 POST https://api.appzen.com/api/v3/oauth2/token
 ```
-{% endcode %}
 
 ### Body Parameters
 
@@ -150,40 +148,36 @@ POST https://api.appzen.com/api/v3/oauth2/token
 The following parameters are required when generating an access token:
 {% endhint %}
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Required</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>client_id</td>
-      <td>String</td>
-      <td>The unique client Id assigned.</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td>client_secret</td>
-      <td>String</td>
-      <td>The unique password assigned.</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <td>scope</td>
-      <td>String</td>
-      <td>The scope assigned.<br>The scope can be:<br>* expense.report.read<br>* expense.report.write</td>
-      <td>Yes</td>
-    </tr>
-  </tbody>
-</table>
+{% tabs %}
+{% tab title="client_id" %}
+**Type:** String
+
+**Description:** The unique client Id assigned.
+
+**Required:** Yes
+{% endtab %}
+
+{% tab title="client_secret" %}
+**Type:** String
+
+**Description:** The unique password assigned.
+
+**Required:** Yes
+{% endtab %}
+
+{% tab title="scope" %}
+**Type:** String
+
+**Description:** The scope assigned. The scope can be:
+* expense.report.read
+* expense.report.write
+
+**Required:** Yes
+{% endtab %}
+{% endtabs %}
 
 ### Sample Request
 
-{% code overflow="wrap" lineNumbers="false" %}
 ```bash
 curl -L -X POST 'https://api.appzen.com/api/v3/oauth2/token' \
 -H 'Content-Type: application/x-www-form-urlencoded' \
@@ -191,13 +185,11 @@ curl -L -X POST 'https://api.appzen.com/api/v3/oauth2/token' \
 --data-urlencode 'client_secret=wfiWxxxx' \
 --data-urlencode 'scope=expense.report.read expense.report.write'
 ```
-{% endcode %}
 
 ### Sample Response
 
 #### Success
 
-{% code overflow="wrap" lineNumbers="false" %}
 ```json
 {
   "token_type": "Bearer",
@@ -206,7 +198,6 @@ curl -L -X POST 'https://api.appzen.com/api/v3/oauth2/token' \
   "scope": "expense.report.read expense.report.write"
 }
 ```
-{% endcode %}
 
 #### Failure
 
@@ -214,7 +205,6 @@ curl -L -X POST 'https://api.appzen.com/api/v3/oauth2/token' \
 If you don't provide the required scope, you'll receive an error response as shown below.
 {% endhint %}
 
-{% code overflow="wrap" lineNumbers="false" %}
 ```json
 {
   "msg": "Internal Server Error: 400 Bad Request: \"{\"error\":\"invalid_scope\",\"error_description\":\"The authorization server resource does not have any configured default scopes, 'scope' must be provided.\"}\"",
@@ -222,7 +212,6 @@ If you don't provide the required scope, you'll receive an error response as sho
   "statusCode": 500
 }
 ```
-{% endcode %}
 
 ## Status Code
 
@@ -230,62 +219,61 @@ If you don't provide the required scope, you'll receive an error response as sho
 The following status codes are returned by the API to indicate the result of your request.
 {% endhint %}
 
-<table>
-  <thead>
-    <tr>
-      <th>HTTP</th>
-      <th>Status</th>
-      <th>Code Summary</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>200</td>
-      <td>OK</td>
-      <td>The request is successful</td>
-    </tr>
-    <tr>
-      <td>201</td>
-      <td>OK</td>
-      <td>The request is successful</td>
-    </tr>
-    <tr>
-      <td>400</td>
-      <td>Bad Request</td>
-      <td>The request failed due to a malformed request syntax. Check the requested URL, including the parameters.</td>
-    </tr>
-    <tr>
-      <td>401</td>
-      <td>Unauthorized</td>
-      <td>The request failed due to an authorization issue. For example, the Customer Key could be missing or invalid.</td>
-    </tr>
-    <tr>
-      <td>402</td>
-      <td>Request Failed</td>
-      <td>The parameters were valid but the request failed.</td>
-    </tr>
-    <tr>
-      <td>403</td>
-      <td>Forbidden</td>
-      <td>The API key doesn't have permissions to perform the request.</td>
-    </tr>
-    <tr>
-      <td>404</td>
-      <td>Not Found</td>
-      <td>The requested resource doesn't exist. Check the requested URL.</td>
-    </tr>
-    <tr>
-      <td>429</td>
-      <td>Too Many Requests</td>
-      <td>Too many requests hit the API too quickly/limit has been consumed. We recommend an exponential backoff of your requests.</td>
-    </tr>
-    <tr>
-      <td>500, 502, 503, 504</td>
-      <td>Server Errors</td>
-      <td>Something went wrong on AppZen's end. (These are rare.)</td>
-    </tr>
-  </tbody>
-</table>
+{% tabs %}
+{% tab title="200" %}
+**Status:** OK
+
+**Description:** The request is successful
+{% endtab %}
+
+{% tab title="201" %}
+**Status:** OK
+
+**Description:** The request is successful
+{% endtab %}
+
+{% tab title="400" %}
+**Status:** Bad Request
+
+**Description:** The request failed due to a malformed request syntax. Check the requested URL, including the parameters.
+{% endtab %}
+
+{% tab title="401" %}
+**Status:** Unauthorized
+
+**Description:** The request failed due to an authorization issue. For example, the Customer Key could be missing or invalid.
+{% endtab %}
+
+{% tab title="402" %}
+**Status:** Request Failed
+
+**Description:** The parameters were valid but the request failed.
+{% endtab %}
+
+{% tab title="403" %}
+**Status:** Forbidden
+
+**Description:** The API key doesn't have permissions to perform the request.
+{% endtab %}
+
+{% tab title="404" %}
+**Status:** Not Found
+
+**Description:** The requested resource doesn't exist. Check the requested URL.
+{% endtab %}
+
+{% tab title="429" %}
+**Status:** Too Many Requests
+
+**Description:** Too many requests hit the API too quickly/limit has been consumed. We recommend an exponential backoff of your requests.
+{% endtab %}
+
+{% tab title="500, 502, 503, 504" %}
+**Status:** Server Errors
+
+**Description:** Something went wrong on AppZen's end. (These are rare.)
+{% endtab %}
+{% endtabs %}
 
 ## SSO
 
@@ -378,52 +366,34 @@ Perform these steps in an incognito/private window (Firefox, Chrome, Edge):
 Here's an example of the SSO assertion data structure with sample values.
 {% endhint %}
 
-<table>
-  <thead>
-    <tr>
-      <th>Attribute Name</th>
-      <th>Attribute Value</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>firstName</td>
-      <td>John</td>
-    </tr>
-    <tr>
-      <td>lastName</td>
-      <td>Doe</td>
-    </tr>
-    <tr>
-      <td>email</td>
-      <td>john.doe@company.com</td>
-    </tr>
-    <tr>
-      <td>permissionGroup</td>
-      <td>Auditor</td>
-    </tr>
-    <tr>
-      <td>permissionGroup</td>
-      <td>Functional Admin</td>
-    </tr>
-    <tr>
-      <td>permissionOrg</td>
-      <td>102345 (org ID)</td>
-    </tr>
-    <tr>
-      <td>permissionOrg</td>
-      <td>13245 (org ID)</td>
-    </tr>
-    <tr>
-      <td>permissionEntity</td>
-      <td>32455556 (entity ID)</td>
-    </tr>
-    <tr>
-      <td>permissionEntity</td>
-      <td>32455231 (entity ID)</td>
-    </tr>
-  </tbody>
-</table>
+{% tabs %}
+{% tab title="firstName" %}
+John
+{% endtab %}
+
+{% tab title="lastName" %}
+Doe
+{% endtab %}
+
+{% tab title="email" %}
+john.doe@company.com
+{% endtab %}
+
+{% tab title="permissionGroup" %}
+* Auditor
+* Functional Admin
+{% endtab %}
+
+{% tab title="permissionOrg" %}
+* 102345 (org ID)
+* 13245 (org ID)
+{% endtab %}
+
+{% tab title="permissionEntity" %}
+* 32455556 (entity ID)
+* 32455231 (entity ID)
+{% endtab %}
+{% endtabs %}
 
 ## CSV
 
@@ -495,36 +465,27 @@ The process of syncing employees, including their organizational hierarchy, in A
 You can upload the following Master Data details into the system through a predefined CSV format from the Integrations Job Status page.
 {% endhint %}
 
-<table>
-  <thead>
-    <tr>
-      <th>Template Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Payment Terms</td>
-      <td>Terms and conditions regarding the settlement of any invoice that the supplier dictates.</td>
-    </tr>
-    <tr>
-      <td>Chart of Accounts (COA)</td>
-      <td>A list of all the general ledger accounts that an organization uses to allocate its expenses.</td>
-    </tr>
-    <tr>
-      <td>Entity</td>
-      <td>The organization in whose name the invoice is issued, i.e., an organization that has purchased goods and services from the supplier.</td>
-    </tr>
-    <tr>
-      <td>Supplier</td>
-      <td>Any organization that supplies goods or/and services and issues invoice to the buyer.</td>
-    </tr>
-    <tr>
-      <td>Purchase Order</td>
-      <td>An official document stating the items, their quantity, and the intended purchase price. A unique alphanumeric id that identifies such a document is the purchase order number.</td>
-    </tr>
-  </tbody>
-</table>
+{% tabs %}
+{% tab title="Payment Terms" %}
+Terms and conditions regarding the settlement of any invoice that the supplier dictates.
+{% endtab %}
+
+{% tab title="Chart of Accounts (COA)" %}
+A list of all the general ledger accounts that an organization uses to allocate its expenses.
+{% endtab %}
+
+{% tab title="Entity" %}
+The organization in whose name the invoice is issued, i.e., an organization that has purchased goods and services from the supplier.
+{% endtab %}
+
+{% tab title="Supplier" %}
+Any organization that supplies goods or/and services and issues invoice to the buyer.
+{% endtab %}
+
+{% tab title="Purchase Order" %}
+An official document stating the items, their quantity, and the intended purchase price. A unique alphanumeric id that identifies such a document is the purchase order number.
+{% endtab %}
+{% endtabs %}
 
 {% hint style="note" %}
 **Note:** There is a specific template for customers whose ERP is Ariba - please choose accordingly while downloading. For all other ERP systems, choose the AppZen template.
